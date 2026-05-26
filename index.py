@@ -2,12 +2,15 @@ from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 import os
 
-# CREAZIONE DELLA VARIABILE PRINCIPALE CHE CERCA VERCEL
-app = Flask(__name__)
-# Questa riga serve a Vercel per capire dove agganciarsi
+# CONFIGURAZIONE DEI PERCORSI PER EVITARE IL CRASH SU VERCEL
+base_dir = os.path.dirname(os.path.abspath(__file__))
+template_dir = os.path.join(base_dir, 'templates')
+static_dir = os.path.join(base_dir, 'static')
+
+app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 handler = app
 
-DB_PATH = 'database.db'
+DB_PATH = os.path.join(base_dir, 'database.db')
 
 CONSOLE_MEMORIA = [
     (1, "PlayStation 1", "Sony", 1994, "5a Generazione", "La console che ha portato il 3D nelle case di tutti."),
