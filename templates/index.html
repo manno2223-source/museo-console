@@ -1,0 +1,63 @@
+{<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Museo delle Console</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #121214; color: #e1e1e6; margin: 0; padding: 0;">
+
+    <header style="background: #1a1a1e; padding: 25px; text-align: center; border-bottom: 4px solid #00adb5;">
+        <h1 style="color: #00adb5; margin: 0; font-size: 2.5rem;">🎮 Museo delle Console</h1>
+        <p style="color: #a0a0b2; margin: 5px 0 0 0;">Archivio Storico Digitale dei Videogiochi</p>
+    </header>
+
+    <div style="max-width: 1100px; margin: 30px auto; padding: 0 20px; display: flex; flex-direction: column; gap: 40px;">
+        
+        <section style="background: #202024; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border-top: 4px solid #ff2e63;">
+            <h2 style="color: #ff2e63; margin-top: 0; margin-bottom: 20px;">➕ Dona una Console al Museo</h2>
+            <form action="/aggiungi" method="POST" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #a0a0b2;">Nome Console:</label>
+                    <input type="text" name="nome" required style="width: 100%; padding: 10px; background: #121214; border: 1px solid #29292e; border-radius: 5px; color: white; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #a0a0b2;">Produttore:</label>
+                    <input type="text" name="produttore" required style="width: 100%; padding: 10px; background: #121214; border: 1px solid #29292e; border-radius: 5px; color: white; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #a0a0b2;">Anno Uscita:</label>
+                    <input type="number" name="anno_uscita" required style="width: 100%; padding: 10px; background: #121214; border: 1px solid #29292e; border-radius: 5px; color: white; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #a0a0b2;">Generazione:</label>
+                    <input type="text" name="generazione" required style="width: 100%; padding: 10px; background: #121214; border: 1px solid #29292e; border-radius: 5px; color: white; box-sizing: border-box;">
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #a0a0b2;">Descrizione Storica:</label>
+                    <textarea name="descrizione" required style="width: 100%; padding: 10px; background: #121214; border: 1px solid #29292e; border-radius: 5px; color: white; min-height: 60px; box-sizing: border-box; resize: vertical;"></textarea>
+                </div>
+                <div style="grid-column: 1 / -1; text-align: right;">
+                    <button type="submit" style="background: #ff2e63; color: white; border: none; padding: 12px 30px; font-size: 1rem; font-weight: bold; border-radius: 5px; cursor: pointer; transition: background 0.2s;">Invia al Database</button>
+                </div>
+            </form>
+        </section>
+
+        <section>
+            <h2 style="color: #00adb5; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #29292e; padding-bottom: 10px;">🏛️ La Collezione del Museo</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+                {% for console in consoles %}
+                <div style="background: #202024; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border-left: 6px solid #00adb5;">
+                    <h3 style="margin: 0 0 10px 0; color: #fff; font-size: 1.4rem;">{{ console[1] }}</h3>
+                    <p style="margin: 5px 0; color: #a0a0b2;"><strong style="color: #00adb5;">Produttore:</strong> {{ console[2] }}</p>
+                    <p style="margin: 5px 0; color: #a0a0b2;"><strong style="color: #00adb5;">Anno di Uscita:</strong> {{ console[3] }}</p>
+                    <p style="margin: 5px 0; color: #a0a0b2;"><strong style="color: #00adb5;">Generazione:</strong> {{ console[4] }}</p>
+                    <p style="margin: 15px 0 0 0; color: #e1e1e6; line-height: 1.4; font-size: 0.95rem; font-style: italic; background: #121214; padding: 10px; border-radius: 4px;">"{{ console[5] }}"</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>
