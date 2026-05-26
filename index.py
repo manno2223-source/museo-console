@@ -2,10 +2,13 @@ from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 import os
 
+# CREAZIONE DELLA VARIABILE PRINCIPALE CHE CERCA VERCEL
 app = Flask(__name__)
+# Questa riga serve a Vercel per capire dove agganciarsi
+handler = app
+
 DB_PATH = 'database.db'
 
-# Dati di backup per evitare il crash 500 online su Vercel
 CONSOLE_MEMORIA = [
     (1, "PlayStation 1", "Sony", 1994, "5a Generazione", "La console che ha portato il 3D nelle case di tutti."),
     (2, "Nintendo 64", "Nintendo", 1996, "5a Generazione", "Rivoluzione totale con Super Mario 64 e i 64 bit."),
@@ -14,11 +17,9 @@ CONSOLE_MEMORIA = [
 
 @app.route('/')
 def index():
-    # Se siamo online su Vercel, usa la memoria sicura per non crashare
     if os.environ.get('VERCEL'):
         return render_template('index.html', consoles=CONSOLE_MEMORIA)
     
-    # Se siamo sul tuo PC, continua a leggere il database SQLITE
     try:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
@@ -56,11 +57,6 @@ def aggiungi():
         CONSOLE_MEMORIA.append((nuovo_id, nome, produttore, int(anno_uscita), generazione, descrizione))
         
     return redirect(url_for('index'))
-
-if __name__ == '__main__':
-    app.run(debug=True, host='127.0.0.1', port=5000, use_reloader=False)
-    # Questa riga serve a Vercel per trovare l'applicazione!
-app = app
 
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=5000, use_reloader=False)
